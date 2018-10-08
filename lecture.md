@@ -1,11 +1,8 @@
-* August 29
-  First day of class!
-** Class minutia
-** Why Rust?
+# Why Rust?
     - Fast
     - Safety -> statically typed, and compile time checks, safe subset
     - Concurrency
-*** Rust is a systems programming language
+## Rust is a systems programming language
   - C and C++, Ada and D
 
   - Operating Systems
@@ -24,7 +21,7 @@
   code’s costs.
 
   - Rust adds its own goals of memory safety and trustworthy concurrency.
-*** Type Safety
+## Type Safety
     A language is said to be type safe, if all programs written in that language
     have defined semantics for all possible states.
 
@@ -43,7 +40,7 @@
 
     - Why then do we not check things at runtime?
 
-*** Performance
+## Performance
   - In general, C++ implementations obey the zero-overhead principle: What you don’t
   use, you don’t pay for. And further: What you do use, you couldn’t hand code any
   better.
@@ -51,23 +48,24 @@
     https://www.karlrupp.net/wp-content/uploads/2015/06/35years.png
   - Power (W)
 
-*** High Level Iterators
+ High Level Iterators
 https://rust.godbolt.org/
 Use -O
+
 ```rust
 pub fn process_array(a: &[i32]) -> i32{
     a.iter().map(|i| 2*i).filter(|i| i % 2 == 0)
     .fold(0, |i, accum| i + accum)
 }
-```rust
-*** Zero Cost Abstraction
-     Monomorphisation
-*** Safety
-**** No null pointer dereferences.
-     Billion Dollar Mistake
-     https://en.wikipedia.org/wiki/Tony_Hoare
+```
 
-      Your program will not crash because you tried to dereference a null pointer.
+## Zero Cost Abstraction
+     Monomorphisation
+## Safety
+### No null pointer dereferences.
+     Billion Dollar Mistake
+     https://stackoverflow.com/questions/1220914/in-which-language-are-the-java-compiler-and-jvm-written
+     Your program will not crash because you tried to dereference a null pointer.
 
       The problems with null
       1) Used to represent a missing value: String getValue(HashTable<String, String> t);
@@ -80,13 +78,14 @@ pub fn process_array(a: &[i32]) -> i32{
       Because no null pointers!
       Not unique to rust.
 
-```
-      Optional Values:
+```rust
+      // Optional Values:
       enum Option<P> {
         Some(P),
         None
       }
 ```
+
       Still compiles down to pointer and null!
 
       ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
@@ -94,7 +93,8 @@ pub fn process_array(a: &[i32]) -> i32{
 
 
       Handling Possible Errors
-```
+      
+```rust
       enum Result<T, E> {
         Ok(T),
         Err(E),
@@ -109,7 +109,7 @@ pub fn process_array(a: &[i32]) -> i32{
       fn read(&mut self, buf: &mut [u8]) -> Result<usize>;
 ```
 
-**** No dangling pointers. Every value will live as long as it must.
+### No dangling pointers. Every value will live as long as it must.
       Your program will never use a heap-allocated value after it has been freed.
 
       How does Java, Python stop you from doing this?
@@ -119,7 +119,7 @@ pub fn process_array(a: &[i32]) -> i32{
       Why not just have a garbage collector? Embedded devices complicated,
       real time systems.
 
-****** Rule 1: Every value has a single owner at any given time.
+#### Rule 1: Every value has a single owner at any given time.
        You can move a value from one owner to another, but when a value’s
        owner goes away, the value is freed along with it.
 
@@ -139,7 +139,7 @@ pub fn process_array(a: &[i32]) -> i32{
        C++ Move semantics...
 
        // compile-time error: use of moved value: `s`
-****** Rule 2: You can borrow a reference to a value, so long as the reference doesn’t outlive the value
+#### Rule 2: You can borrow a reference to a value, so long as the reference doesn’t outlive the value
        (or equivalently, its owner). Borrowed references are temporary pointers;
        they allow you to operate on values you don’t own.
 ```
@@ -179,10 +179,10 @@ pub fn process_array(a: &[i32]) -> i32{
          return array;
        }
 ```
-****** Rule 3: You can only modify a value when you have exclusive access to it.
+#### Rule 3: You can only modify a value when you have exclusive access to it.
 
 
-****  No buffer overruns.
+###  No buffer overruns.
       Your program will never access elements beyond the end or before the start of an array.
 
       Heartbleed: https://xkcd.com/1354/
@@ -201,7 +201,7 @@ pub fn process_array(a: &[i32]) -> i32{
           *i = n;
       }
 ```
-**** Concurrent
+### Concurrent
 ```
      let handle = std::thread::spawn(|| {
        println!("Hello world!");
