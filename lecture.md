@@ -1,14 +1,6 @@
 * August 29
   First day of class!
 ** Class minutia
-- [ ] About Me, my email.
-- [ ] Class Demographics
-- [ ] Who knows Rust?
-- [ ] Website https://www.seas.upenn.edu/~cis198/
-- [ ] Homework: Github Pages
-- [ ] Blogs
-- [ ] Piazza
-- [ ] Office Hours
 ** Why Rust?
     - Fast
     - Safety -> statically typed, and compile time checks, safe subset
@@ -46,7 +38,7 @@
 
     - C and C++ are not type safe!
     - Systems languages are what we built everything on top of!
-      https://www.google.com/search?source=hp&ei=C36EW9zZDpCY_Qam3rLoBw&q=what%27s+jvm+written+in&oq=what%27s+jvm+written+in&gs_l=psy-ab.3..0i22i30k1.31.5251.0.5486.24.22.1.0.0.0.216.1999.13j6j1.20.0....0...1.1.64.psy-ab..3.21.1998.0..0j0i131k1.0.F9_Z6MQ-zK0
+      https://stackoverflow.com/questions/1220914/in-which-language-are-the-java-compiler-and-jvm-written
     - CPython
 
     - Why then do we not check things at runtime?
@@ -62,17 +54,18 @@
 *** High Level Iterators
 https://rust.godbolt.org/
 Use -O
-
+```rust
 pub fn process_array(a: &[i32]) -> i32{
     a.iter().map(|i| 2*i).filter(|i| i % 2 == 0)
     .fold(0, |i, accum| i + accum)
 }
+```rust
 *** Zero Cost Abstraction
      Monomorphisation
 *** Safety
 **** No null pointer dereferences.
      Billion Dollar Mistake
-      https://en.wikipedia.org/wiki/Tony_Hoare
+     https://en.wikipedia.org/wiki/Tony_Hoare
 
       Your program will not crash because you tried to dereference a null pointer.
 
@@ -87,13 +80,13 @@ pub fn process_array(a: &[i32]) -> i32{
       Because no null pointers!
       Not unique to rust.
 
-
+```
       Optional Values:
       enum Option<P> {
         Some(P),
         None
       }
-
+```
       Still compiles down to pointer and null!
 
       ssize_t bytes_read = read(fd, buffer, sizeof(buffer));
@@ -101,7 +94,7 @@ pub fn process_array(a: &[i32]) -> i32{
 
 
       Handling Possible Errors
-
+```
       enum Result<T, E> {
         Ok(T),
         Err(E),
@@ -114,7 +107,7 @@ pub fn process_array(a: &[i32]) -> i32{
       type Result<T> = std::result::Result<T, Error>
 
       fn read(&mut self, buf: &mut [u8]) -> Result<usize>;
-
+```
 
 **** No dangling pointers. Every value will live as long as it must.
       Your program will never use a heap-allocated value after it has been freed.
@@ -132,13 +125,13 @@ pub fn process_array(a: &[i32]) -> i32{
 
        Variables own their values
        Single owner, when it goes out of scope the value is freed
-
+```
        {
          let s = "omar".to_string();
          let s2 = s;
          let s3 = s;
        }
-
+```
        In C++ this would copy the value.
 
        Do we mean move values or copy value?
@@ -149,7 +142,7 @@ pub fn process_array(a: &[i32]) -> i32{
 ****** Rule 2: You can borrow a reference to a value, so long as the reference doesn’t outlive the value
        (or equivalently, its owner). Borrowed references are temporary pointers;
        they allow you to operate on values you don’t own.
-
+```
        - Passing and returning arguments to a function.
        add1(v: vec<int>) -> Vec<int>;
 
@@ -185,7 +178,7 @@ pub fn process_array(a: &[i32]) -> i32{
          // Init to something
          return array;
        }
-
+```
 ****** Rule 3: You can only modify a value when you have exclusive access to it.
 
 
@@ -197,7 +190,7 @@ pub fn process_array(a: &[i32]) -> i32{
       Problem: C and C++ allow for direct memory dereference, no checking.
 
       Rust checks.
-
+```
       fn fill(s: &mut[i32], n: i32) {
         for i in 0..s.len() {
         s[i] = n;
@@ -207,8 +200,9 @@ pub fn process_array(a: &[i32]) -> i32{
         for i in a {
           *i = n;
       }
-
+```
 **** Concurrent
+```
      let handle = std::thread::spawn(|| {
        println!("Hello world!");
        3
@@ -222,17 +216,17 @@ pub fn process_array(a: &[i32]) -> i32{
          println!("{}", string);
        });
      }
-
+```
      error: closure may outlive the current function, but it
      borrows `x`, which is owned by the current function
-
+```
      {
        let mut string = "hello".to_string();
        spawn(move || {
          println!("{}", string);
        });
      }
-
+```
 
      Rust complains!
 
@@ -241,7 +235,7 @@ pub fn process_array(a: &[i32]) -> i32{
 
 
      Sharing data across multiple threads,
-
+```
      use std::thread::*;
      use std::sync::Arc;
 
@@ -270,4 +264,4 @@ pub fn process_array(a: &[i32]) -> i32{
          println!("{}", child_ref2);
        });
      }
-
+```
