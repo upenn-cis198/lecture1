@@ -19,10 +19,13 @@ Areas of systems programming:
 - Scientific Computing
 - Video Games
 
-Who uses Rust?
+## Who uses Rust?
 Mozilla: Firefox
-Amazon: https://aws.amazon.com/blogs/aws/firecracker-lightweight-virtualization-for-serverless-computing/
+
+Amazon: https://aws.amazon.com/blogs/aws/firecracker-lightweight-virtualization-for-serverless-computing
+
 Facebook: https://developers.libra.org/
+
 Dropbox: backend infrastructure
 
 
@@ -43,11 +46,12 @@ have defined semantics for all possible states.
 https://www.zdnet.com/article/microsoft-70-percent-of-all-security-bugs-are-memory-safety-issues/
 
 ## Aside: Typing
-- Static Typing vs Dynamic Typing
-- Strongly Typed
+Static Typing vs Dynamic Typing
+
+Strongly Typed
 
 ## C and C++ are not type safe!
-- Undefined Behavior is the root of all evil.
+Undefined Behavior is the root of all evil.
 
 ### Undefined Behavior
 No buffer overruns.
@@ -81,7 +85,7 @@ and system crashes, which have probably caused a billion dollars of pain and dam
 - Energy usage is also important! https://www.businessinsider.com/hhvm-saved-facebook-millions-dollars-2015-7
 
 # Concurrency
-- Computers are multicore, need for parallelism
+Computers are multicore, need for parallelism
   https://www.karlrupp.net/wp-content/uploads/2015/06/35years.png
 
 Concurrency is hard:
