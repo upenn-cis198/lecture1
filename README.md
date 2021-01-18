@@ -1,3 +1,5 @@
+# Warning: These lecture notes are not yet updated for spring 2021.
+
 # Rust Overview
 
 "Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety."
