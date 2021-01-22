@@ -1,5 +1,5 @@
 [package]
-name = "demo-reqwest"
+name = "demos"
 version = "0.1.0"
 authors = ["Caleb Stanford <caleb.pirsquared@gmail.com>"]
 edition = "2018"
